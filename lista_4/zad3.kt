@@ -38,7 +38,7 @@ sealed class MonthlyCostStatus {
 }
 
 fun classifyMonthlyCosts(costs: List<Cost>, month: Month, limit: Int): MonthlyCostStatus {
-    val filteredCosts = costs.filter { it.date.month == month }
+    val filteredCosts = costs.filter { it.date.month == month } // tylko te ktorych miesiac sie zgadza
 
     if (filteredCosts.isEmpty()) {
         return MonthlyCostStatus.NoCosts
@@ -46,7 +46,7 @@ fun classifyMonthlyCosts(costs: List<Cost>, month: Month, limit: Int): MonthlyCo
 
     val total = filteredCosts.sumOf { it.amount }
 
-    return if (total <= limit) {
+    return if (total <= limit) { // porownanie sumy z limitem
         MonthlyCostStatus.WithinLimit(total)
     } else {
         MonthlyCostStatus.OverLimit(total, total - limit)
